@@ -1,0 +1,150 @@
+{
+ "buckets": {},
+ "services": {
+  "bdf7e5eb-845b-41cc-8810-70a00d515d36": {
+   "icon": "https://raw.githubusercontent.com/two-workspaces/metabase/main/icon.svg",
+   "name": "Metabase",
+   "build": {
+    "dockerfilePath": "Dockerfile"
+   },
+   "deploy": {
+    "startCommand": null,
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 600,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+   },
+   "source": {
+    "repo": "https://github.com/two-workspaces/metabase",
+    "rootDirectory": null
+   },
+   "networking": {
+    "serviceDomains": {
+     "<hasDomain>": {}
+    }
+   },
+   "volumeMounts": {},
+   "variables": {
+    "MB_ADMIN_EMAIL": {
+     "defaultValue": "",
+     "description": "Email for the first admin account, created on first boot. You sign in with it.",
+     "isOptional": false
+    },
+    "MB_ADMIN_PASSWORD": {
+     "defaultValue": "${{secret(32, \"0123456789abcdef\")}}",
+     "description": "Password for the first admin account, generated at deploy time. Used once on first boot; change it in Metabase afterwards (Account settings -> Password).",
+     "isOptional": false
+    },
+    "MB_SITE_URL": {
+     "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
+     "description": "Public URL Metabase uses in links, emails and embeds. Change it after adding a custom domain.",
+     "isOptional": false
+    },
+    "MB_ENCRYPTION_SECRET_KEY": {
+     "defaultValue": "${{secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+     "description": "Encrypts the connection details of the databases you add. Keep it: without it Metabase can't read them.",
+     "isOptional": false
+    },
+    "MB_DB_TYPE": {
+     "defaultValue": "postgres",
+     "description": "Metabase's own application database type",
+     "isOptional": false
+    },
+    "MB_DB_HOST": {
+     "defaultValue": "${{Postgres.RAILWAY_PRIVATE_DOMAIN}}",
+     "description": "Postgres host (private network)",
+     "isOptional": false
+    },
+    "MB_DB_PORT": {
+     "defaultValue": "5432",
+     "description": "Postgres port",
+     "isOptional": false
+    },
+    "MB_DB_DBNAME": {
+     "defaultValue": "${{Postgres.POSTGRES_DB}}",
+     "description": "Postgres database",
+     "isOptional": false
+    },
+    "MB_DB_USER": {
+     "defaultValue": "${{Postgres.POSTGRES_USER}}",
+     "description": "Postgres user",
+     "isOptional": false
+    },
+    "MB_DB_PASS": {
+     "defaultValue": "${{Postgres.POSTGRES_PASSWORD}}",
+     "description": "Postgres password",
+     "isOptional": false
+    },
+    "MB_JETTY_HOST": {
+     "defaultValue": "::",
+     "description": "Listen on IPv4 and IPv6 so Railway's private network can reach Metabase - leave as is.",
+     "isOptional": false
+    },
+    "MB_JETTY_PORT": {
+     "defaultValue": "3000",
+     "description": "HTTP port Metabase listens on - leave as is.",
+     "isOptional": false
+    },
+    "PORT": {
+     "defaultValue": "3000",
+     "description": "Port Railway routes the public domain to - leave as is.",
+     "isOptional": false
+    },
+    "JAVA_OPTS": {
+     "defaultValue": "-Xmx1g",
+     "description": "JVM options. -Xmx caps the Java heap; raise it (e.g. -Xmx2g) for many users or big result sets.",
+     "isOptional": false
+    }
+   }
+  },
+  "b9bf40b2-cf7f-4509-9e2e-b51f705212c9": {
+   "icon": "https://devicons.railway.app/i/postgresql.svg",
+   "name": "Postgres",
+   "build": {},
+   "deploy": {
+    "startCommand": null,
+    "healthcheckPath": null,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+   },
+   "source": {
+    "image": "postgres:17.11-alpine"
+   },
+   "networking": {
+    "serviceDomains": {}
+   },
+   "volumeMounts": {
+    "82e2d877-5b96-414e-9f21-0740f813b864": {
+     "mountPath": "/var/lib/postgresql/data"
+    }
+   },
+   "variables": {
+    "POSTGRES_DB": {
+     "defaultValue": "metabase",
+     "description": "Database name",
+     "isOptional": false
+    },
+    "POSTGRES_USER": {
+     "defaultValue": "metabase",
+     "description": "Database user",
+     "isOptional": false
+    },
+    "POSTGRES_PASSWORD": {
+     "defaultValue": "${{secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+     "description": "Auto-generated database password",
+     "isOptional": false
+    },
+    "PGDATA": {
+     "defaultValue": "/var/lib/postgresql/data/pgdata",
+     "description": "Data subdirectory - keeps Postgres happy on Railway volumes",
+     "isOptional": false
+    },
+    "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+     "defaultValue": "60",
+     "description": "Time for Postgres to shut down cleanly on redeploy",
+     "isOptional": false
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Metabase | Open-Source BI and Dashboards with Postgres",
+  "short_name": "Metabase Production",
+  "description": "BI dashboards and SQL for your team, admin ready on first boot",
+  "category": "Analytics",
+  "image": "https://raw.githubusercontent.com/two-workspaces/metabase/main/icon.svg",
+  "card_desc": "Metabase: ask questions of your databases, build dashboards and share them with your team. Runs Metabase v0.64.3.4 on its own Postgres, with the admin account created on first boot.",
+  "published": false
+}
