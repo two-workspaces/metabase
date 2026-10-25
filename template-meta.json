@@ -5,6 +5,6 @@
   "category": "Analytics",
   "image": "https://raw.githubusercontent.com/two-workspaces/metabase/main/icon.svg",
   "card_desc": "Metabase: ask questions of your databases, build dashboards and share them with your team. Runs Metabase v0.64.3.4 on its own Postgres, with the admin account created on first boot.",
-  "published": false,
+  "published": true,
   "id": "b3fc45cd-d2b1-455b-9ac7-c5340e44de8b"
 }
